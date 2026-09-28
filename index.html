@@ -3,873 +3,2375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Thanima FarmLife Daily Operations Report</title>
+    <meta name="theme-color" content="#1b5e20">
+    <meta name="description" content="Thanima Farm Life - Daily Operations & Security Management Report System with instant WhatsApp dispatch.">
+    <title>Thanima FarmLife - Daily Operations Report</title>
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #1b5e20;
+            --primary-light: #2e7d32;
+            --primary-hover: #144918;
+            --primary-surface: #e8f5e9;
+            --accent: #00c853;
+            --whatsapp: #25d366;
+            --whatsapp-dark: #128c7e;
+            --whatsapp-hover: #1ebd5b;
+            
+            --bg-page: #f0f4f1;
+            --bg-card: #ffffff;
+            --bg-card-subtle: #f8faf8;
+            --bg-input: #ffffff;
+            
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --text-on-primary: #ffffff;
+            
+            --border-color: #e5e7eb;
+            --border-focus: #2e7d32;
+            --ring-focus: rgba(46, 125, 50, 0.25);
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 35px -5px rgba(27, 94, 32, 0.15);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0f1712;
+            --bg-card: #18221b;
+            --bg-card-subtle: #1e2c22;
+            --bg-input: #233428;
+            
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            
+            --border-color: #2b3d30;
+            --border-focus: #4caf50;
+            --ring-focus: rgba(76, 175, 80, 0.3);
+            
+            --primary-surface: #1e3323;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.6);
+            --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.7);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #32CD32 100%);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 10px;
+            padding: calc(12px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .container {
-            max-width: 900px;
+        .main-wrapper {
+            max-width: 980px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #2E8B57 0%, #228B22 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .date-display {
-            font-size: 1.3em;
-            opacity: 0.95;
-            font-weight: 500;
-        }
-
-        .form-section {
-            padding: 40px;
-        }
-
-        .section-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-left: 5px solid #2E8B57;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            animation: slideInUp 0.5s ease-out;
-        }
-
-        .section-title {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: #2E8B57;
-            margin-bottom: 20px;
+        /* Top Bar */
+        .top-bar {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 4px 4px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 1em;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #2E8B57;
-            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .number-input {
-            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
-            font-weight: 600;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .textarea-small {
-            height: 80px;
-            resize: vertical;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            background: #f8f9fa;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .checkbox-item:hover {
-            background: #e8f5e8;
-            transform: scale(1.05);
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            width: auto;
-            margin: 0;
-        }
-
-        .materials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .material-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-        }
-
-        .material-item input[type="text"] {
-            flex: 2;
-            margin: 0;
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .material-item input[type="number"] {
-            flex: 1;
-            margin: 0;
-            padding: 8px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .whatsapp-section {
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            padding: 30px;
-            color: white;
-        }
-
-        .whatsapp-section h3 {
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .whatsapp-icon {
-            width: 30px;
-            height: 30px;
-            fill: currentColor;
-        }
-
-        .phone-input {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .brand-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            flex: 1;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary);
+            background: var(--primary-surface);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            min-width: 150px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #2E8B57 0%, #228B22 100%);
-            color: white;
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--border-focus);
+            color: var(--primary);
         }
 
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: white;
+        /* Hero Header Card */
+        .header-card {
+            background: linear-gradient(135deg, #134e1c 0%, #1b5e20 40%, #2e7d32 100%);
+            color: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
         }
 
-        .btn-clear {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
+        .header-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
 
-        .preview-section {
-            background: #f8f9fa;
-            margin-top: 30px;
-            padding: 25px;
-            border-radius: 12px;
-            border: 2px dashed #dee2e6;
+        .header-title-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
-        .preview-section h3 {
-            color: #495057;
-            margin-bottom: 15px;
+        .header-title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .preview-content {
-            background: white;
+        .header-title .brand-editable {
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .header-title .brand-editable:hover {
+            border-bottom-color: #ffffff;
+        }
+
+        .header-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .date-control-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .date-display-badge {
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .date-input-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .date-picker-input {
+            background: #ffffff;
+            color: #1f2937;
+            border: none;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .date-quick-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .date-quick-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Autosave pill */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.02em;
+        }
+
+        .status-pill::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00e676;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px #00e676;
+        }
+
+        /* Quick Overview Stat Strip */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--primary-surface);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .stat-info .stat-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .stat-info .stat-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Form Sections Cards */
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .section-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(46, 125, 50, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            background: var(--primary-surface);
+            color: var(--primary);
+        }
+
+        .section-badge.warning {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .form-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .input-subtle-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .input-control {
+            width: 100%;
+            height: 48px;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+            box-sizing: border-box;
+        }
+
+        .input-control:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--ring-focus);
+        }
+
+        .input-control.number-center {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Quick Stepper for Numbers */
+        .stepper-wrap {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .stepper-btn {
+            background: var(--bg-card-subtle);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-main);
+            width: 38px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .stepper-btn.minus {
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            border-right: none;
+        }
+
+        .stepper-btn.plus {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            border-left: none;
+        }
+
+        .stepper-wrap .input-control {
+            border-radius: 0;
+            text-align: center;
+        }
+
+        .stepper-btn:hover {
+            background: var(--primary-surface);
+            color: var(--primary);
+        }
+
+        /* Service Chips */
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .service-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-full);
+            background: var(--bg-card-subtle);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .service-chip input[type="checkbox"] {
+            display: none;
+        }
+
+        .service-chip .check-indicator {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            transition: var(--transition);
+        }
+
+        .service-chip.active {
+            background: var(--primary-surface);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(46, 125, 50, 0.15);
+        }
+
+        .service-chip.active .check-indicator {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .service-chip:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary-light);
+        }
+
+        /* Dynamic Items List (Food, Materials) */
+        .items-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .dynamic-item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 100px 48px;
+            gap: 10px;
+            align-items: center;
+            background: var(--bg-card-subtle);
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .dynamic-item-row.food-item-row {
+            grid-template-columns: 2.5fr 1fr 48px;
+        }
+
+        .dynamic-item-row:hover {
+            border-color: rgba(46, 125, 50, 0.4);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .unit-select {
+            height: 48px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            padding: 0 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .unit-select:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--ring-focus);
+        }
+
+        .delete-item-btn {
+            height: 48px;
+            width: 48px;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .delete-item-btn:hover {
+            background: #ef4444;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .btn-add-item {
+            background: var(--bg-card-subtle);
+            border: 2px dashed var(--border-color);
+            color: var(--primary);
+            border-radius: var(--radius-md);
+            padding: 12px 18px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-add-item:hover {
+            background: var(--primary-surface);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .presets-bar {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .preset-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        .preset-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .preset-chip:hover {
+            background: var(--primary-surface);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Message Preview Card */
+        .preview-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 24px;
+        }
+
+        .whatsapp-bubble-header {
+            background: #075e54;
+            color: #ffffff;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-contact {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #128c7e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .chat-info .chat-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.2;
+        }
+
+        .chat-info .chat-status {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        .preview-bubble-body {
+            background-color: #efeae2;
+            background-image: radial-gradient(#d1c7b7 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
             padding: 20px;
-            border-radius: 8px;
+            min-height: 200px;
+        }
+
+        [data-theme="dark"] .preview-bubble-body {
+            background-color: #0b141a;
+            background-image: radial-gradient(#1f2c34 0.75px, transparent 0.75px);
+        }
+
+        .whatsapp-message-bubble {
+            background: #ffffff;
+            color: #111b21;
+            padding: 16px 18px;
+            border-radius: 8px 8px 8px 0;
+            max-width: 580px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            font-size: 0.92rem;
+            line-height: 1.6;
             white-space: pre-wrap;
-            font-family: monospace;
-            color: #333;
-            border-left: 4px solid #2E8B57;
-            font-size: 13px;
-            line-height: 1.4;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            position: relative;
         }
 
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        [data-theme="dark"] .whatsapp-message-bubble {
+            background: #005c4b;
+            color: #e9edef;
         }
 
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
+        .bubble-meta {
+            text-align: right;
+            font-size: 0.7rem;
+            color: #667781;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        [data-theme="dark"] .bubble-meta {
+            color: #8696a0;
+        }
+
+        .check-marks {
+            color: #53bdeb;
+            font-weight: bold;
+        }
+
+        /* Action Drawer / Bottom Section */
+        .actions-card {
+            background: linear-gradient(135deg, var(--whatsapp-dark) 0%, #075e54 100%);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            color: #ffffff;
+            box-shadow: var(--shadow-xl);
+            margin-bottom: 24px;
+        }
+
+        .actions-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .actions-header svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .actions-header h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .phone-config-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 140px;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .phone-config-row .input-control {
+            background: #ffffff;
+            color: #111b21;
+            font-weight: 600;
+        }
+
+        .recipient-select {
+            height: 48px;
+            background: #ffffff;
+            color: #111b21;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0 10px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .action-buttons-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-action {
+            height: 52px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+            user-select: none;
+            padding: 0 16px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-whatsapp-primary {
             background: #25d366;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            color: #ffffff;
         }
 
-        .notification.show {
-            transform: translateX(0);
+        .btn-whatsapp-primary:hover {
+            background: #1ebd5b;
         }
 
-        /* --- MOBILE OVERRIDES --- */
-        @media (max-width: 600px) {
-            .container {
-                max-width: 100vw;
-                border-radius: 0;
-                box-shadow: none;
-                margin: 0;
+        .btn-whatsapp-web {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-whatsapp-web:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-copy {
+            background: #ffffff;
+            color: #075e54;
+        }
+
+        .btn-copy:hover {
+            background: #f0fdf4;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        .secondary-actions-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1f2937;
+            color: #ffffff;
+            padding: 14px 22px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+            border-left: 4px solid #25d366;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+
+        /* Footer */
+        .page-footer {
+            text-align: center;
+            padding: 24px 0 12px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 840px) {
+            .form-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .header {
-                padding: 18px 5px;
+            .action-buttons-grid {
+                grid-template-columns: 1fr 1fr;
             }
-            .header h1 {
-                font-size: 1.3em;
-                margin-bottom: 5px;
+            .phone-config-row {
+                grid-template-columns: 1fr 1fr;
             }
-            .date-display {
-                font-size: 1em;
+            .phone-config-row .phone-input-col {
+                grid-column: span 2;
             }
-            .form-section {
-                padding: 10px 5px;
+        }
+
+        @media (max-width: 580px) {
+            body {
+                padding: calc(8px + env(safe-area-inset-top)) 8px calc(20px + env(safe-area-inset-bottom)) 8px;
+            }
+            .header-card {
+                padding: 20px 16px;
+                border-radius: var(--radius-md);
+            }
+            .header-title {
+                font-size: 1.4rem;
             }
             .section-card {
-                padding: 12px 6px;
-                margin-bottom: 12px;
-                border-radius: 10px;
-                font-size: 0.98em;
+                padding: 16px 14px;
+                border-radius: var(--radius-md);
             }
-            .section-title {
-                font-size: 1.1em;
-                margin-bottom: 10px;
-                gap: 6px;
-            }
-            .form-row {
+            .form-grid-4 {
                 grid-template-columns: 1fr;
-                gap: 10px;
-                margin-bottom: 10px;
             }
-            .form-group label {
-                font-size: 0.98em;
-                margin-bottom: 5px;
+            .form-grid-2 {
+                grid-template-columns: 1fr;
             }
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
+            .dynamic-item-row {
+                grid-template-columns: 1fr 80px 75px 44px;
+                gap: 6px;
                 padding: 8px 10px;
-                font-size: 14px;
-                border-radius: 7px;
             }
-            .number-input {
-                font-size: 14px;
+            .dynamic-item-row.food-item-row {
+                grid-template-columns: 1fr 80px 44px;
             }
-            .checkbox-group {
-                gap: 8px;
-            }
-            .checkbox-item {
-                padding: 6px 8px;
-                border-radius: 14px;
-                font-size: 0.95em;
-            }
-            .materials-grid {
+            .action-buttons-grid {
                 grid-template-columns: 1fr;
-                gap: 8px;
             }
-            .material-item {
-                gap: 6px;
-                padding: 7px;
-                border-radius: 6px;
-                font-size: 0.95em;
+            .actions-card {
+                padding: 20px 16px;
+                border-radius: var(--radius-md);
             }
-            .whatsapp-section {
-                padding: 12px 5px;
-                font-size: 1em;
+            .phone-config-row {
+                grid-template-columns: 1fr;
             }
-            .whatsapp-section h3 {
-                font-size: 1.1em;
-                margin-bottom: 10px;
-                gap: 6px;
+            .phone-config-row .phone-input-col {
+                grid-column: span 1;
             }
-            .whatsapp-icon {
-                width: 22px;
-                height: 22px;
+            .stats-strip {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .button-group {
-                gap: 8px;
-                margin-top: 15px;
+            .date-control-bar {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            .btn {
-                padding: 10px 12px;
-                font-size: 14px;
-                border-radius: 8px;
-                min-width: 100px;
+            .date-input-wrap {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-between;
             }
-            .preview-section {
-                margin-top: 15px;
-                padding: 10px 5px;
-                border-radius: 8px;
-            }
-            .preview-section h3 {
-                font-size: 1em;
-                margin-bottom: 8px;
-            }
-            .preview-content {
-                padding: 10px 5px;
-                font-size: 12px;
-                border-radius: 6px;
-            }
-            .notification {
-                top: 10px;
-                right: 10px;
-                padding: 10px 15px;
-                font-size: 0.95em;
-                border-radius: 6px;
+            .toast {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
             }
         }
 
-        /* --- END MOBILE OVERRIDES --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏨 Thanima Farm Life Daily Report</h1>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 10px;">
-                <div class="date-display" id="currentDate"></div>
-                <input type="date" id="reportDate" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #2E8B57; font-size: 1em;">
+    <div class="main-wrapper">
+        <!-- Top Bar Navigation & Utilities -->
+        <header class="top-bar">
+            <div class="brand-badge">
+                <span>🛡️</span>
+                <span>Security & Operations Portal</span>
             </div>
-        </div>
+            <div class="top-actions">
+                <button type="button" class="icon-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <button type="button" class="icon-btn" id="quickShareBtn" title="Quick Share" aria-label="Share report">
+                    <span>📤</span>
+                </button>
+            </div>
+        </header>
 
-        <div class="form-section">
-            <form id="operationsForm">
-                <!-- Driver Details Section -->
-                <div class="section-card">
-                    <h3 class="section-title">🚗 Driver Details</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="totalDrivers">Number of drivers</label>
-                            <input type="number" id="totalDrivers" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="dayout">Day out</label>
-                            <input type="number" id="dayout" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="stay">Stay</label>
-                            <input type="number" id="stay" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="eveningOut">Evening out</label>
-                            <input type="number" id="eveningOut" class="number-input">
-                        </div>
+        <!-- Header Card -->
+        <div class="header-card">
+            <div class="header-content">
+                <div class="header-title-row">
+                    <div>
+                        <h1 class="header-title">
+                            <span>🏨</span>
+                            <span class="brand-editable" id="resortTitleDisplay" title="Click to rename property">Thanima Farm Life</span>
+                        </h1>
+                        <p class="header-subtitle">Daily Security & Operations Master Log</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Services Provided</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="welcomeDrink">
-                                <label for="welcomeDrink">Welcome drink</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="food">
-                                <label for="food">Food</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="teaSnacks">
-                                <label for="teaSnacks">Tea snacks</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="farmVisit">
-                                <label for="farmVisit">Farm visit</label>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="status-pill" id="autoSaveIndicator">Draft Auto-Saved</div>
                 </div>
 
-                <!-- Vehicle Parking Section -->
-                <div class="section-card">
-                    <h3 class="section-title">🚐 Vehicle Parking</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="totalVehicles">Total</label>
-                            <input type="number" id="totalVehicles" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicleDayOut">Day out</label>
-                            <input type="number" id="vehicleDayOut" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicleStay">Stay</label>
-                            <input type="number" id="vehicleStay" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicleEveningOut">Evening day out</label>
-                            <input type="number" id="vehicleEveningOut" class="number-input">
-                        </div>
+                <!-- Date Picker & Selector -->
+                <div class="date-control-bar">
+                    <div class="date-display-badge">
+                        <span>📅</span>
+                        <span id="currentDateFormatted">Loading date...</span>
                     </div>
-                </div>
-
-                <!-- Other Updates Section -->
-                <div class="section-card">
-                    <h3 class="section-title">📋 Other Updates</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="walkInEnquiries">Walk-in Enquiries</label>
-                            <input type="number" id="walkInEnquiries" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="gatePasses">Gate passes</label>
-                            <input type="number" id="gatePasses" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="resumesReceived">Resumes received</label>
-                            <input type="number" id="resumesReceived" class="number-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="interviews">Interviews</label>
-                            <input type="number" id="interviews" class="number-input">
-                        </div>
+                    <div class="date-input-wrap">
+                        <button type="button" class="date-quick-btn" id="btnDateToday">Today</button>
+                        <button type="button" class="date-quick-btn" id="btnDateYesterday">Yesterday</button>
+                        <input type="date" id="reportDatePicker" class="date-picker-input" aria-label="Select report date">
                     </div>
-                </div>
-
-                <!-- Driver's Food Section -->
-                <div class="section-card">
-                    <h3 class="section-title">🍽️ Driver's Food</h3>
-                    <div class="materials-grid" id="driversFoodGrid"></div>
-                    <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="addDriversFoodItem()">
-                        ➕ Add Food Item
-                    </button>
-                </div>
-
-                <!-- Materials In Section -->
-                <div class="section-card">
-                    <h3 class="section-title">📦 Materials In</h3>
-                    <div class="materials-grid" id="materialsGrid">
-                    </div>
-                    <button type="button" class="btn btn-primary" style="margin-top:15px;" onclick="addMaterialItem()">
-                        ➕ Add Material
-                    </button>
-                </div>
-
-                <!-- Wristband Section -->
-                <div class="section-card">
-                    <h3 class="section-title">🎫 Wristband Issued</h3>
-                    <div class="form-group">
-                        <input type="number" id="wristbandIssued" class="number-input">
-                    </div>
-                </div>
-            </form>
-
-            <div class="preview-section">
-                <h3>📱 WhatsApp Message Preview</h3>
-                <div class="preview-content" id="messagePreview">
-                    Fill out the form above to see the preview...
                 </div>
             </div>
         </div>
 
-        <div class="whatsapp-section">
-            <h3>
-                <svg class="whatsapp-icon" viewBox="0 0 24 24">
+        <!-- Quick Summary Stats Strip -->
+        <section class="stats-strip" aria-label="Summary Statistics">
+            <div class="stat-card">
+                <div class="stat-icon">🚗</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="summaryDrivers">0</div>
+                    <div class="stat-label">Drivers</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚐</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="summaryVehicles">0</div>
+                    <div class="stat-label">Vehicles</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎫</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="summaryWristbands">0</div>
+                    <div class="stat-label">Wristbands</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="summaryMaterials">0</div>
+                    <div class="stat-label">Materials</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Form Section -->
+        <form id="operationsForm" autocomplete="off" onsubmit="event.preventDefault();">
+            <!-- 1. Driver Details Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>🚗</span>
+                        <span>Driver Details</span>
+                    </h2>
+                    <span class="section-badge" id="driverMatchBadge">Total: 0</span>
+                </div>
+
+                <div class="form-grid-4">
+                    <div class="form-group">
+                        <label for="totalDrivers">
+                            <span>Total Drivers</span>
+                            <span class="input-subtle-hint">Count</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('totalDrivers', -1)">−</button>
+                            <input type="number" id="totalDrivers" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('totalDrivers', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dayout">
+                            <span>Day Out</span>
+                            <span class="input-subtle-hint">Visitors</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('dayout', -1)">−</button>
+                            <input type="number" id="dayout" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('dayout', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stay">
+                            <span>Stay</span>
+                            <span class="input-subtle-hint">Overnight</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('stay', -1)">−</button>
+                            <input type="number" id="stay" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('stay', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eveningOut">
+                            <span>Evening Out</span>
+                            <span class="input-subtle-hint">Evening</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('eveningOut', -1)">−</button>
+                            <input type="number" id="eveningOut" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('eveningOut', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 18px;">
+                    <label>Services Provided to Drivers</label>
+                    <div class="chips-container">
+                        <label class="service-chip" id="chip-welcomeDrink">
+                            <input type="checkbox" id="welcomeDrink">
+                            <span class="check-indicator">✓</span>
+                            <span>🍹 Welcome Drink</span>
+                        </label>
+                        <label class="service-chip" id="chip-food">
+                            <input type="checkbox" id="food">
+                            <span class="check-indicator">✓</span>
+                            <span>🍽️ Food</span>
+                        </label>
+                        <label class="service-chip" id="chip-teaSnacks">
+                            <input type="checkbox" id="teaSnacks">
+                            <span class="check-indicator">✓</span>
+                            <span>☕ Tea & Snacks</span>
+                        </label>
+                        <label class="service-chip" id="chip-farmVisit">
+                            <input type="checkbox" id="farmVisit">
+                            <span class="check-indicator">✓</span>
+                            <span>🚜 Farm Visit</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Vehicle Parking Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>🚐</span>
+                        <span>Vehicle Parking</span>
+                    </h2>
+                    <span class="section-badge" id="vehicleMatchBadge">Total: 0</span>
+                </div>
+
+                <div class="form-grid-4">
+                    <div class="form-group">
+                        <label for="totalVehicles">
+                            <span>Total Vehicles</span>
+                            <span class="input-subtle-hint">All</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('totalVehicles', -1)">−</button>
+                            <input type="number" id="totalVehicles" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('totalVehicles', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleDayOut">
+                            <span>Day Out</span>
+                            <span class="input-subtle-hint">Day parking</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('vehicleDayOut', -1)">−</button>
+                            <input type="number" id="vehicleDayOut" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('vehicleDayOut', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleStay">
+                            <span>Stay</span>
+                            <span class="input-subtle-hint">Night parking</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('vehicleStay', -1)">−</button>
+                            <input type="number" id="vehicleStay" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('vehicleStay', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleEveningOut">
+                            <span>Evening Out</span>
+                            <span class="input-subtle-hint">Evening</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('vehicleEveningOut', -1)">−</button>
+                            <input type="number" id="vehicleEveningOut" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('vehicleEveningOut', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Other Updates Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>📋</span>
+                        <span>Front Gate & Office Updates</span>
+                    </h2>
+                    <span class="section-badge">Security Log</span>
+                </div>
+
+                <div class="form-grid-4">
+                    <div class="form-group">
+                        <label for="walkInEnquiries">
+                            <span>Walk-in Enquiries</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('walkInEnquiries', -1)">−</button>
+                            <input type="number" id="walkInEnquiries" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('walkInEnquiries', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gatePasses">
+                            <span>Gate Passes Issued</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('gatePasses', -1)">−</button>
+                            <input type="number" id="gatePasses" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('gatePasses', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resumesReceived">
+                            <span>Resumes Received</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('resumesReceived', -1)">−</button>
+                            <input type="number" id="resumesReceived" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('resumesReceived', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interviews">
+                            <span>Interviews Conducted</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('interviews', -1)">−</button>
+                            <input type="number" id="interviews" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('interviews', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Driver's Food Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>🍽️</span>
+                        <span>Driver's Food Log</span>
+                    </h2>
+                    <span class="section-badge" id="foodItemsCountBadge">0 items</span>
+                </div>
+
+                <div class="items-stack" id="driversFoodGrid">
+                    <!-- Dynamic food items populated here -->
+                </div>
+
+                <button type="button" class="btn-add-item" onclick="addDriversFoodItem()">
+                    <span>➕</span>
+                    <span>Add Driver Food Item</span>
+                </button>
+
+                <div class="presets-bar">
+                    <span class="preset-label">Quick add:</span>
+                    <button type="button" class="preset-chip" onclick="addDriversFoodItem('Omelet', 1)">+ Omelet</button>
+                    <button type="button" class="preset-chip" onclick="addDriversFoodItem('Rice', 1)">+ Rice</button>
+                    <button type="button" class="preset-chip" onclick="addDriversFoodItem('Meals', 1)">+ Meals</button>
+                    <button type="button" class="preset-chip" onclick="addDriversFoodItem('Tea', 1)">+ Tea</button>
+                    <button type="button" class="preset-chip" onclick="addDriversFoodItem('Breakfast', 1)">+ Breakfast</button>
+                </div>
+            </div>
+
+            <!-- 5. Materials Inward Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>📦</span>
+                        <span>Materials Inward Log</span>
+                    </h2>
+                    <span class="section-badge" id="materialsCountBadge">0 items</span>
+                </div>
+
+                <div class="items-stack" id="materialsGrid">
+                    <!-- Dynamic material items populated here -->
+                </div>
+
+                <button type="button" class="btn-add-item" onclick="addMaterialItem()">
+                    <span>➕</span>
+                    <span>Add Inward Material</span>
+                </button>
+
+                <div class="presets-bar">
+                    <span class="preset-label">Quick add:</span>
+                    <button type="button" class="preset-chip" onclick="addMaterialItem('Ayurvedic oil', 12, 'ltr')">+ Ayurvedic oil</button>
+                    <button type="button" class="preset-chip" onclick="addMaterialItem('Clay pot', 6, 'nos')">+ Clay pot</button>
+                    <button type="button" class="preset-chip" onclick="addMaterialItem('Cookies', 36.5, 'kg')">+ Cookies</button>
+                    <button type="button" class="preset-chip" onclick="addMaterialItem('Log book', 1, 'nos')">+ Log book</button>
+                    <button type="button" class="preset-chip" onclick="addMaterialItem('Cerelac', 5, 'nos')">+ Cerelac</button>
+                </div>
+            </div>
+
+            <!-- 6. Wristband Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span>🎫</span>
+                        <span>Guest Wristbands Issued</span>
+                    </h2>
+                    <span class="section-badge">Daily Entry Tracker</span>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="wristbandIssued">
+                            <span>Total Wristbands Issued</span>
+                            <span class="input-subtle-hint">Total count for the day</span>
+                        </label>
+                        <div class="stepper-wrap">
+                            <button type="button" class="stepper-btn minus" onclick="stepNumber('wristbandIssued', -1)">−</button>
+                            <input type="number" id="wristbandIssued" class="input-control number-center" min="0" placeholder="0" value="0">
+                            <button type="button" class="stepper-btn plus" onclick="stepNumber('wristbandIssued', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quick Adjustments</label>
+                        <div style="display: flex; gap: 8px; height: 48px;">
+                            <button type="button" class="preset-chip" style="flex: 1; height: 100%; font-size: 0.95rem;" onclick="stepNumber('wristbandIssued', 5)">+5</button>
+                            <button type="button" class="preset-chip" style="flex: 1; height: 100%; font-size: 0.95rem;" onclick="stepNumber('wristbandIssued', 10)">+10</button>
+                            <button type="button" class="preset-chip" style="flex: 1; height: 100%; font-size: 0.95rem;" onclick="stepNumber('wristbandIssued', 25)">+25</button>
+                            <button type="button" class="preset-chip" style="flex: 1; height: 100%; font-size: 0.95rem;" onclick="stepNumber('wristbandIssued', 50)">+50</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- WhatsApp Dispatch & Sharing Center -->
+        <div class="actions-card">
+            <div class="actions-header">
+                <svg viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                 </svg>
-                Send to WhatsApp
-            </h3>
-            
-            <div class="form-group">
-                <label for="whatsappNumber">WhatsApp Number (with country code)</label>
-                <input type="tel" id="whatsappNumber" class="phone-input" placeholder="e.g., +91XXXXXXXXXX" required>
+                <div>
+                    <h3>WhatsApp Connect & Dispatch</h3>
+                    <p style="font-size: 0.85rem; opacity: 0.85;">Send formatted daily operational reports directly to WhatsApp management chats</p>
+                </div>
             </div>
 
-            <div class="button-group">
-                <button type="button" class="btn btn-primary" onclick="generatePreview()">
-                    📝 Update Preview
+            <!-- Phone configuration -->
+            <div class="phone-config-row">
+                <div>
+                    <label for="countryCodeSelect" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">Country</label>
+                    <select id="countryCodeSelect" class="recipient-select" style="width: 100%;">
+                        <option value="91" selected>🇮🇳 +91 (IN)</option>
+                        <option value="971">🇦🇪 +971 (UAE)</option>
+                        <option value="966">🇸🇦 +966 (KSA)</option>
+                        <option value="974">🇶🇦 +974 (QA)</option>
+                        <option value="968">🇴🇲 +968 (OM)</option>
+                        <option value="965">🇰🇼 +965 (KW)</option>
+                        <option value="44">🇬🇧 +44 (UK)</option>
+                        <option value="1">🇺🇸 +1 (US)</option>
+                        <option value="custom">🌐 Other</option>
+                    </select>
+                </div>
+
+                <div class="phone-input-col">
+                    <label for="whatsappNumber" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">WhatsApp Number (or leave empty to choose contact)</label>
+                    <input type="tel" id="whatsappNumber" class="input-control" placeholder="e.g. 9876543210 (optional)">
+                </div>
+
+                <div>
+                    <label for="savedRecipientsSelect" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:4px;">Quick Recipient</label>
+                    <select id="savedRecipientsSelect" class="recipient-select" style="width: 100%;">
+                        <option value="">Choose / None</option>
+                        <option value="save_current">➕ Save Current Number</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Primary Dispatch Actions -->
+            <div class="action-buttons-grid">
+                <button type="button" class="btn-action btn-whatsapp-primary" id="btnSendWhatsApp" onclick="sendWhatsApp(false)">
+                    <span>📱</span>
+                    <span>Send to WhatsApp</span>
                 </button>
-                <button type="button" class="btn btn-whatsapp" onclick="sendWhatsApp()">
-                    📱 Send to WhatsApp
+
+                <button type="button" class="btn-action btn-whatsapp-web" id="btnSendWhatsAppWeb" onclick="sendWhatsApp(true)">
+                    <span>💻</span>
+                    <span>WhatsApp Web</span>
                 </button>
-                <button type="button" class="btn btn-clear" onclick="clearForm()">
-                    🗑️ Clear Form
+
+                <button type="button" class="btn-action btn-copy" onclick="copyReportText()">
+                    <span>📋</span>
+                    <span>Copy Text</span>
                 </button>
-                <button type="button" class="btn btn-primary" onclick="loadSampleData()">
+
+                <button type="button" class="btn-action btn-secondary" onclick="shareNativeReport()">
+                    <span>📤</span>
+                    <span>Share...</span>
+                </button>
+            </div>
+
+            <!-- Secondary Actions -->
+            <div class="secondary-actions-bar">
+                <button type="button" class="preset-chip" style="color:#ffffff; background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3);" onclick="loadSampleData()">
                     📋 Load Sample Data
+                </button>
+                <button type="button" class="preset-chip" style="color:#ffffff; background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3);" onclick="downloadReportTxt()">
+                    💾 Export as .TXT
+                </button>
+                <button type="button" class="preset-chip" style="color:#ffffff; background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3);" onclick="window.print()">
+                    🖨️ Print Report
+                </button>
+                <button type="button" class="preset-chip" style="color:#fca5a5; background:rgba(239,68,68,0.25); border-color:rgba(239,68,68,0.4); margin-left:auto;" onclick="confirmClearForm()">
+                    🗑️ Reset Form
                 </button>
             </div>
         </div>
+
+        <!-- WhatsApp Chat Simulation & Message Preview -->
+        <div class="preview-card">
+            <div class="whatsapp-bubble-header">
+                <div class="chat-contact">
+                    <div class="chat-avatar">🛡️</div>
+                    <div class="chat-info">
+                        <div class="chat-name" id="previewChatName">Thanima Farm Life Operations</div>
+                        <div class="chat-status">Live WhatsApp Formatted Preview</div>
+                    </div>
+                </div>
+                <button type="button" class="preset-chip" style="background:rgba(255,255,255,0.2); color:#ffffff; border:none;" onclick="copyReportText()">
+                    Copy Message
+                </button>
+            </div>
+
+            <div class="preview-bubble-body">
+                <div class="whatsapp-message-bubble" id="messagePreview">Generating preview...</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <p>Thanima Farm Life • Security & Operations Management System</p>
+            <p style="font-size:0.75rem; margin-top:4px;">Responsive • Mobile-Optimized • Direct WhatsApp Integration</p>
+        </footer>
     </div>
 
-    <div class="notification" id="notification"></div>
+    <!-- Notification Toast -->
+    <div class="toast" id="toastNotification" role="alert" aria-live="polite">
+        <span id="toastIcon">✅</span>
+        <span id="toastMessage">Action completed</span>
+    </div>
 
+    <!-- App Logic Script -->
     <script>
-        // Display current date and set date picker
-        function updateDate() {
-            const now = new Date();
-            // Set date picker to today if not set
-            const dateInput = document.getElementById('reportDate');
-            if (!dateInput.value) {
-                dateInput.value = now.toISOString().slice(0, 10);
-            }
-            // Format date for display
-            const selectedDate = new Date(dateInput.value);
-            const options = { 
-                weekday: 'long',
-                day: '2-digit',
-                month: '2-digit', 
-                year: '2-digit'
-            };
-            const formatted = selectedDate.toLocaleDateString('en-GB', options);
-            document.getElementById('currentDate').textContent = `*Daily Report ${formatted}*`;
-        }
+        // State Management
+        const STORAGE_KEY = 'thanima_report_draft_v2';
+        const RECIPIENTS_KEY = 'thanima_saved_recipients_v2';
+        const PROPERTY_NAME_KEY = 'thanima_property_name';
+        const THEME_KEY = 'thanima_app_theme';
 
-        // Load sample data
-        function loadSampleData() {
-            document.getElementById('totalDrivers').value = 1;
-            document.getElementById('dayout').value = 1;
-            document.getElementById('stay').value = 0;
-            document.getElementById('eveningOut').value = 0;
-            
-            document.getElementById('welcomeDrink').checked = true;
-            document.getElementById('food').checked = true;
-            document.getElementById('teaSnacks').checked = true;
-            document.getElementById('farmVisit').checked = true;
-            
-            document.getElementById('totalVehicles').value = 14;
-            document.getElementById('vehicleDayOut').value = 11;
-            document.getElementById('vehicleStay').value = 3;
-            document.getElementById('vehicleEveningOut').value = 0;
-            
-            document.getElementById('walkInEnquiries').value = 1;
-            document.getElementById('gatePasses').value = 2;
-            document.getElementById('resumesReceived').value = 0;
-            document.getElementById('interviews').value = 0;
-            
-            // Clear existing driver's food
-            document.getElementById('driversFoodGrid').innerHTML = '';
-            // Add sample driver's food items
-            addDriversFoodItem('Omelet', 1);
-            addDriversFoodItem('Rice', 2);
-            
-            // Clear existing materials
-            document.getElementById('materialsGrid').innerHTML = '';
-            // Add sample materials
-            addMaterialItem('Ayurvedic oil', 12, 'ltr');
-            addMaterialItem('Clay pot', 6, 'nos');
-            addMaterialItem('Log registration book', 1, 'nos');
-            addMaterialItem('Cookies', 36.5, 'kg');
-            addMaterialItem('Cerelac', 5, 'nos');
-            addMaterialItem('Potassium', 10, 'nos');
-            
-            document.getElementById('wristbandIssued').value = 55;
-            
+        let propertyName = localStorage.getItem(PROPERTY_NAME_KEY) || 'Thanima Farm Life';
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initPropertyName();
+            initDatePicker();
+            initRecipients();
+            restoreDraftOrSample();
+            setupEventListeners();
             generatePreview();
-            showNotification('Sample data loaded successfully!', 'success');
+        });
+
+        // Theme Support (Light / Dark)
+        function initTheme() {
+            const savedTheme = localStorage.getItem(THEME_KEY) || 
+                (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            setTheme(savedTheme);
+
+            document.getElementById('themeToggleBtn').addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'dark' ? 'light' : 'dark';
+                setTheme(next);
+            });
         }
 
-        // Generate message preview
-        function generatePreview() {
-            // Use selected date from date picker
-            const dateInput = document.getElementById('reportDate');
-            const selectedDate = dateInput.value ? new Date(dateInput.value) : new Date();
-            const currentDate = selectedDate.toLocaleDateString('en-GB', {
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            document.getElementById('themeIcon').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Property Name Customization
+        function initPropertyName() {
+            const titleElem = document.getElementById('resortTitleDisplay');
+            titleElem.textContent = propertyName;
+            document.getElementById('previewChatName').textContent = `${propertyName} Operations`;
+            document.title = `${propertyName} - Daily Operations Report`;
+
+            titleElem.addEventListener('click', () => {
+                const newName = prompt('Enter property / resort name:', propertyName);
+                if (newName && newName.trim()) {
+                    propertyName = newName.trim();
+                    titleElem.textContent = propertyName;
+                    document.getElementById('previewChatName').textContent = `${propertyName} Operations`;
+                    document.title = `${propertyName} - Daily Operations Report`;
+                    localStorage.setItem(PROPERTY_NAME_KEY, propertyName);
+                    generatePreview();
+                    showToast(`Property renamed to "${propertyName}"`);
+                }
+            });
+        }
+
+        // Date Handling (Timezone-safe)
+        function initDatePicker() {
+            const picker = document.getElementById('reportDatePicker');
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            
+            picker.value = `${year}-${month}-${day}`;
+            updateDateDisplay();
+
+            picker.addEventListener('change', () => {
+                updateDateDisplay();
+                generatePreview();
+                saveDraft();
+            });
+
+            document.getElementById('btnDateToday').addEventListener('click', () => {
+                const today = new Date();
+                picker.value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                updateDateDisplay();
+                generatePreview();
+                saveDraft();
+            });
+
+            document.getElementById('btnDateYesterday').addEventListener('click', () => {
+                const yest = new Date();
+                yest.setDate(yest.getDate() - 1);
+                picker.value = `${yest.getFullYear()}-${String(yest.getMonth() + 1).padStart(2, '0')}-${String(yest.getDate()).padStart(2, '0')}`;
+                updateDateDisplay();
+                generatePreview();
+                saveDraft();
+            });
+        }
+
+        function getSelectedDateObject() {
+            const picker = document.getElementById('reportDatePicker');
+            if (!picker.value) {
+                return new Date();
+            }
+            // Parse YYYY-MM-DD directly to prevent UTC midnight timezone shifts
+            const parts = picker.value.split('-');
+            if (parts.length === 3) {
+                return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            }
+            return new Date();
+        }
+
+        function updateDateDisplay() {
+            const dateObj = getSelectedDateObject();
+            const options = { 
+                weekday: 'long', 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: '2-digit' 
+            };
+            const formatted = dateObj.toLocaleDateString('en-GB', options);
+            document.getElementById('currentDateFormatted').textContent = formatted;
+        }
+
+        // Number Stepper Helper
+        window.stepNumber = function(inputId, delta) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            let val = parseInt(input.value, 10);
+            if (isNaN(val)) val = 0;
+            val = Math.max(0, val + delta);
+            input.value = val;
+            generatePreview();
+            saveDraft();
+        };
+
+        // Service Chips toggle styling
+        function setupServiceChips() {
+            const chips = ['welcomeDrink', 'food', 'teaSnacks', 'farmVisit'];
+            chips.forEach(id => {
+                const checkbox = document.getElementById(id);
+                const chipLabel = document.getElementById(`chip-${id}`);
+                if (checkbox && chipLabel) {
+                    checkbox.addEventListener('change', () => {
+                        chipLabel.classList.toggle('active', checkbox.checked);
+                        generatePreview();
+                        saveDraft();
+                    });
+                }
+            });
+        }
+
+        // Dynamic Driver Food Items
+        window.addDriversFoodItem = function(name = '', qty = '') {
+            const grid = document.getElementById('driversFoodGrid');
+            const row = document.createElement('div');
+            row.className = 'dynamic-item-row food-item-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Food item (e.g. Omelet, Rice)" class="input-control drivers-food-name" value="${escapeHtml(name)}">
+                <input type="number" min="1" placeholder="Qty" class="input-control number-center drivers-food-qty" value="${qty !== '' ? qty : 1}">
+                <button type="button" class="delete-item-btn" title="Delete item" aria-label="Delete food item">🗑️</button>
+            `;
+
+            grid.appendChild(row);
+
+            const nameInput = row.querySelector('.drivers-food-name');
+            const qtyInput = row.querySelector('.drivers-food-qty');
+            const delBtn = row.querySelector('.delete-item-btn');
+
+            delBtn.addEventListener('click', () => {
+                row.remove();
+                generatePreview();
+                saveDraft();
+            });
+
+            // Smart input parse: e.g. "Omelet 2"
+            nameInput.addEventListener('blur', () => {
+                const val = nameInput.value.trim();
+                const match = val.match(/^(.+?)\s+(\d+)$/);
+                if (match) {
+                    nameInput.value = match[1].trim();
+                    qtyInput.value = match[2];
+                }
+                generatePreview();
+                saveDraft();
+            });
+
+            nameInput.addEventListener('input', () => { generatePreview(); saveDraft(); });
+            qtyInput.addEventListener('input', () => { generatePreview(); saveDraft(); });
+
+            generatePreview();
+            saveDraft();
+        };
+
+        // Dynamic Materials Inward Items
+        window.addMaterialItem = function(name = '', qty = '', unit = 'nos') {
+            const grid = document.getElementById('materialsGrid');
+            const row = document.createElement('div');
+            row.className = 'dynamic-item-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Material item (e.g. Clay pot, Cookies)" class="input-control material-name" value="${escapeHtml(name)}">
+                <input type="number" min="0" step="any" placeholder="Qty" class="input-control number-center material-qty" value="${qty !== '' ? qty : ''}">
+                <select class="unit-select material-unit" aria-label="Unit">
+                    <option value="nos"${unit === 'nos' ? ' selected' : ''}>nos</option>
+                    <option value="kg"${unit === 'kg' ? ' selected' : ''}>kg</option>
+                    <option value="ltr"${unit === 'ltr' ? ' selected' : ''}>ltr</option>
+                    <option value="pkt"${unit === 'pkt' ? ' selected' : ''}>pkt</option>
+                    <option value="box"${unit === 'box' ? ' selected' : ''}>box</option>
+                    <option value="bundle"${unit === 'bundle' ? ' selected' : ''}>bundle</option>
+                </select>
+                <button type="button" class="delete-item-btn" title="Delete item" aria-label="Delete material item">🗑️</button>
+            `;
+
+            grid.appendChild(row);
+
+            const nameInput = row.querySelector('.material-name');
+            const qtyInput = row.querySelector('.material-qty');
+            const unitSelect = row.querySelector('.material-unit');
+            const delBtn = row.querySelector('.delete-item-btn');
+
+            delBtn.addEventListener('click', () => {
+                row.remove();
+                generatePreview();
+                saveDraft();
+            });
+
+            // Smart input parse: e.g. "Cookies 36.5 kg" or "Clay pot 6 nos"
+            nameInput.addEventListener('blur', () => {
+                const val = nameInput.value.trim();
+                const match = val.match(/^(.+?)\s+(\d+(?:\.\d+)?)(\s*(nos|kg|ltr|pkt|box|bundle))?$/i);
+                if (match) {
+                    nameInput.value = match[1].trim();
+                    qtyInput.value = match[2];
+                    if (match[4]) {
+                        unitSelect.value = match[4].toLowerCase();
+                    }
+                }
+                generatePreview();
+                saveDraft();
+            });
+
+            nameInput.addEventListener('input', () => { generatePreview(); saveDraft(); });
+            qtyInput.addEventListener('input', () => { generatePreview(); saveDraft(); });
+            unitSelect.addEventListener('change', () => { generatePreview(); saveDraft(); });
+
+            generatePreview();
+            saveDraft();
+        };
+
+        // Form change listeners
+        function setupEventListeners() {
+            setupServiceChips();
+
+            const form = document.getElementById('operationsForm');
+            form.addEventListener('input', () => {
+                generatePreview();
+                saveDraft();
+            });
+            form.addEventListener('change', () => {
+                generatePreview();
+                saveDraft();
+            });
+
+            document.getElementById('whatsappNumber').addEventListener('input', saveDraft);
+            document.getElementById('countryCodeSelect').addEventListener('change', saveDraft);
+
+            // Quick Share Button in top bar
+            document.getElementById('quickShareBtn').addEventListener('click', shareNativeReport);
+
+            // Saved recipients handler
+            document.getElementById('savedRecipientsSelect').addEventListener('change', (e) => {
+                const val = e.target.value;
+                if (val === 'save_current') {
+                    saveCurrentNumberAsRecipient();
+                } else if (val) {
+                    document.getElementById('whatsappNumber').value = val;
+                    saveDraft();
+                    showToast(`Selected contact: ${val}`);
+                }
+            });
+        }
+
+        // Preview & Markdown Generation
+        window.generatePreview = function() {
+            const dateObj = getSelectedDateObject();
+            const formattedDate = dateObj.toLocaleDateString('en-GB', {
                 weekday: 'long',
                 day: '2-digit',
                 month: '2-digit',
                 year: '2-digit'
             });
 
-            let message = `*Daily Report ${currentDate}*\n\n`;
+            // Clean numerical getters
+            const getVal = (id) => {
+                const el = document.getElementById(id);
+                if (!el || el.value === '') return 0;
+                const parsed = parseFloat(el.value);
+                return isNaN(parsed) ? 0 : parsed;
+            };
+
+            const totalDrivers = getVal('totalDrivers');
+            const dayoutDrivers = getVal('dayout');
+            const stayDrivers = getVal('stay');
+            const eveningDrivers = getVal('eveningOut');
+
+            const totalVehicles = getVal('totalVehicles');
+            const vehicleDayOut = getVal('vehicleDayOut');
+            const vehicleStay = getVal('vehicleStay');
+            const vehicleEveningOut = getVal('vehicleEveningOut');
+
+            const walkInEnquiries = getVal('walkInEnquiries');
+            const gatePasses = getVal('gatePasses');
+            const resumesReceived = getVal('resumesReceived');
+            const interviews = getVal('interviews');
+
+            const wristbandIssued = getVal('wristbandIssued');
+
+            // Update Summary strip
+            document.getElementById('summaryDrivers').textContent = totalDrivers;
+            document.getElementById('summaryVehicles').textContent = totalVehicles;
+            document.getElementById('summaryWristbands').textContent = wristbandIssued;
+
+            // Badges validation check
+            const driverSum = dayoutDrivers + stayDrivers + eveningDrivers;
+            const driverBadge = document.getElementById('driverMatchBadge');
+            if (totalDrivers > 0 && driverSum === totalDrivers) {
+                driverBadge.textContent = `Total: ${totalDrivers} ✓`;
+                driverBadge.className = 'section-badge';
+            } else if (totalDrivers > 0 && driverSum !== totalDrivers) {
+                driverBadge.textContent = `Sum: ${driverSum} ≠ Total: ${totalDrivers}`;
+                driverBadge.className = 'section-badge warning';
+            } else {
+                driverBadge.textContent = `Total: ${totalDrivers}`;
+                driverBadge.className = 'section-badge';
+            }
+
+            const vehicleSum = vehicleDayOut + vehicleStay + vehicleEveningOut;
+            const vehicleBadge = document.getElementById('vehicleMatchBadge');
+            if (totalVehicles > 0 && vehicleSum === totalVehicles) {
+                vehicleBadge.textContent = `Total: ${totalVehicles} ✓`;
+                vehicleBadge.className = 'section-badge';
+            } else if (totalVehicles > 0 && vehicleSum !== totalVehicles) {
+                vehicleBadge.textContent = `Sum: ${vehicleSum} ≠ Total: ${totalVehicles}`;
+                vehicleBadge.className = 'section-badge warning';
+            } else {
+                vehicleBadge.textContent = `Total: ${totalVehicles}`;
+                vehicleBadge.className = 'section-badge';
+            }
+
+            // Construct Report Message
+            let msg = `*Daily Report ${formattedDate}*\n\n`;
 
             // Driver Details
-            message += `*Driver Details:*\n`;
-            message += `- Number of drivers: ${document.getElementById('totalDrivers').value || '0'}\n`;
-            message += `- Dayout: ${document.getElementById('dayout').value || '0'}\n`;
-            message += `- Stay: ${document.getElementById('stay').value || 'nil'}\n`;
-            message += `- Evening out: ${document.getElementById('eveningOut').value || 'nil'}\n`;
-            
-            // Services provided
+            msg += `*Driver Details:*\n`;
+            msg += `- Number of drivers: ${totalDrivers}\n`;
+            msg += `- Dayout: ${dayoutDrivers}\n`;
+            msg += `- Stay: ${stayDrivers > 0 ? stayDrivers : 'nil'}\n`;
+            msg += `- Evening out: ${eveningDrivers > 0 ? eveningDrivers : 'nil'}\n`;
+
             const services = [];
-            if (document.getElementById('welcomeDrink').checked) services.push('Welcome drink');
-            if (document.getElementById('food').checked) services.push('Food');
-            if (document.getElementById('teaSnacks').checked) services.push('Tea snacks');
-            if (document.getElementById('farmVisit').checked) services.push('Farm visit');
-            
+            if (document.getElementById('welcomeDrink')?.checked) services.push('Welcome drink');
+            if (document.getElementById('food')?.checked) services.push('Food');
+            if (document.getElementById('teaSnacks')?.checked) services.push('Tea snacks');
+            if (document.getElementById('farmVisit')?.checked) services.push('Farm visit');
+
             if (services.length > 0) {
-                message += `${services.join(', ')} done\n`;
+                msg += `${services.join(', ')} done\n`;
             }
-            
-            message += `\n`;
+            msg += `\n`;
 
             // Vehicle Parking
-            message += `*Vehicle Parking:*\n`;
-            message += `- Total: ${document.getElementById('totalVehicles').value || '0'}\n`;
-            message += `- Day out: ${document.getElementById('vehicleDayOut').value || '0'}\n`;
-            message += `- Stay: ${document.getElementById('vehicleStay').value || '0'}\n`;
-            message += `- Evening day out: ${document.getElementById('vehicleEveningOut').value || 'nil'}\n\n`;
+            msg += `*Vehicle Parking:*\n`;
+            msg += `- Total: ${totalVehicles}\n`;
+            msg += `- Day out: ${vehicleDayOut}\n`;
+            msg += `- Stay: ${vehicleStay}\n`;
+            msg += `- Evening day out: ${vehicleEveningOut > 0 ? vehicleEveningOut : 'nil'}\n\n`;
 
             // Other Updates
-            message += `*Other Updates:*\n`;
-            message += `- Walk-in Enquiries: ${document.getElementById('walkInEnquiries').value || '0'}\n`;
-            message += `- Gate passes: ${document.getElementById('gatePasses').value || '0'}\n`;
-            message += `- Resumes received: ${document.getElementById('resumesReceived').value || 'nil'}\n`;
-            message += `- Interviews: ${document.getElementById('interviews').value || 'nil'}\n\n`;
+            msg += `*Other Updates:*\n`;
+            msg += `- Walk-in Enquiries: ${walkInEnquiries}\n`;
+            msg += `- Gate passes: ${gatePasses}\n`;
+            msg += `- Resumes received: ${resumesReceived > 0 ? resumesReceived : 'nil'}\n`;
+            msg += `- Interviews: ${interviews > 0 ? interviews : 'nil'}\n\n`;
 
             // Driver's Food
             const foodGrid = document.getElementById('driversFoodGrid');
-            const foodItems = foodGrid.querySelectorAll('.material-item');
+            const foodRows = foodGrid.querySelectorAll('.dynamic-item-row');
             let hasFood = false;
-            let foodMsg = '';
-            foodItems.forEach(item => {
-                const name = item.querySelector('.drivers-food-name').value.trim();
-                const qty = item.querySelector('.drivers-food-qty').value.trim();
+            let foodMsg = `*Driver's food*\n`;
+            let foodCount = 0;
+
+            foodRows.forEach(row => {
+                const name = row.querySelector('.drivers-food-name')?.value.trim();
+                const qty = row.querySelector('.drivers-food-qty')?.value.trim();
                 if (name && qty && qty !== '0') {
-                    if (!hasFood) {
-                        foodMsg += `*Driver's food*\n`;
-                        hasFood = true;
-                    }
                     foodMsg += `* ${name} - ${qty}\n`;
+                    hasFood = true;
+                    foodCount++;
                 }
             });
+
+            document.getElementById('foodItemsCountBadge').textContent = `${foodCount} item${foodCount === 1 ? '' : 's'}`;
             if (hasFood) {
-                message += foodMsg + '\n';
+                msg += foodMsg + '\n';
             }
 
-            // Materials In
-            message += `*Materials in*\n`;
-            const grid = document.getElementById('materialsGrid');
-            const items = grid.querySelectorAll('.material-item');
+            // Materials Inward
+            msg += `*Materials in*\n`;
+            const materialsGrid = document.getElementById('materialsGrid');
+            const materialRows = materialsGrid.querySelectorAll('.dynamic-item-row');
             let hasMaterial = false;
-            items.forEach(item => {
-                const name = item.querySelector('.material-name').value.trim();
-                const qty = item.querySelector('.material-qty').value.trim();
-                const unit = item.querySelector('.material-unit').value;
+            let materialCount = 0;
+
+            materialRows.forEach(row => {
+                const name = row.querySelector('.material-name')?.value.trim();
+                const qty = row.querySelector('.material-qty')?.value.trim();
+                const unit = row.querySelector('.material-unit')?.value || 'nos';
                 if (name && qty && qty !== '0') {
-                    message += `* ${name} - ${qty} ${unit}\n`;
+                    msg += `* ${name} - ${qty} ${unit}\n`;
                     hasMaterial = true;
+                    materialCount++;
                 }
             });
-            if (!hasMaterial) message += 'None\n';
 
-            message += `\n`;
+            if (!hasMaterial) {
+                msg += `None\n`;
+            }
+            msg += `\n`;
+
+            document.getElementById('summaryMaterials').textContent = materialCount;
+            document.getElementById('materialsCountBadge').textContent = `${materialCount} item${materialCount === 1 ? '' : 's'}`;
 
             // Wristband
-            const wristband = document.getElementById('wristbandIssued').value || '';
-            if (wristband !== '') {
-                message += `*Wrist band issued* - ${wristband}`;
+            if (wristbandIssued > 0) {
+                msg += `*Wrist band issued* - ${wristbandIssued}\n`;
             }
 
-            document.getElementById('messagePreview').textContent = message;
-        }
+            // Update UI preview bubble
+            const previewEl = document.getElementById('messagePreview');
+            const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Format WhatsApp markup in preview bubble for realistic preview
+            let formattedHtml = escapeHtml(msg)
+                .replace(/\*(.*?)\*/g, '<strong>$1</strong>')
+                .replace(/_(.*?)_/g, '<em>$1</em>');
 
-        // Send to WhatsApp
-        function sendWhatsApp() {
-            // Use the preview message as WhatsApp message
-            const message = document.getElementById('messagePreview').textContent;
-            if (!message || message === 'Fill out the form above to see the preview...') {
-                showNotification('Please fill the form to generate the message.', 'error');
+            previewEl.innerHTML = formattedHtml + `
+                <div class="bubble-meta">
+                    <span>${nowTime}</span>
+                    <span class="check-marks">✓✓</span>
+                </div>
+            `;
+
+            return msg;
+        };
+
+        // WhatsApp Dispatch Function
+        window.sendWhatsApp = function(forceWeb = false) {
+            const message = generatePreview();
+            if (!message || message.trim() === '') {
+                showToast('Please fill out the report before sending.', 'error');
                 return;
             }
 
-            const whatsappNumber = document.getElementById('whatsappNumber').value.trim();
-
-            if (whatsappNumber) {
-                // Send to specific number
-                const cleanNumber = whatsappNumber.replace(/[^0-9]/g, '');
-                const whatsappURL = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
-                window.open(whatsappURL, '_blank');
-            } else {
-                // Open WhatsApp with message (user can choose contact)
-                const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
-                window.open(whatsappURL, '_blank');
-            }
-            showNotification('Redirecting to WhatsApp...', 'success');
-        }
-
-        // Materials dynamic add
-        function addMaterialItem(name = '', qty = '', unit = 'nos') {
-            const grid = document.getElementById('materialsGrid');
-            const div = document.createElement('div');
-            div.className = 'material-item';
-            div.innerHTML = `
-                <input type="text" placeholder="Material name" class="material-name" value="${name}">
-                <input type="number" min="0" placeholder="0" class="material-qty" value="${qty}">
-                <span>
-                    <select class="material-unit">
-                        <option value="nos"${unit === 'nos' ? ' selected' : ''}>nos</option>
-                        <option value="kg"${unit === 'kg' ? ' selected' : ''}>kg</option>
-                        <option value="ltr"${unit === 'ltr' ? ' selected' : ''}>ltr</option>
-                    </select>
-                </span>
-                <button type="button" onclick="this.parentElement.remove()" style="margin-left:10px;">🗑️</button>
-            `;
-            grid.appendChild(div);
-
-            // Add parsing logic for numbers in name field
-            const nameInput = div.querySelector('.material-name');
-            nameInput.addEventListener('blur', function() {
-                // Example: "Cookies 2kg" or "Clay pot 5 nos"
-                const val = nameInput.value.trim();
-                const match = val.match(/^(.+?)\s+(\d+(?:\.\d+)?)(\s*(nos|kg|ltr))?$/i);
-                if (match) {
-                    nameInput.value = match[1].trim();
-                    div.querySelector('.material-qty').value = match[2];
-                    if (match[4]) {
-                        div.querySelector('.material-unit').value = match[4].toLowerCase();
-                    }
-                }
-            });
-        }
-
-        // Add Driver's Food item
-        function addDriversFoodItem(name = '', qty = '') {
-            const grid = document.getElementById('driversFoodGrid');
-            const div = document.createElement('div');
-            div.className = 'material-item';
-            div.innerHTML = `
-                <input type="text" placeholder="Food name" class="drivers-food-name" value="${name}">
-                <input type="number" placeholder="0" class="drivers-food-qty" value="${qty}">
-                <button type="button" onclick="this.parentElement.remove()" style="margin-left:10px;">🗑️</button>
-            `;
-            grid.appendChild(div);
-
-            // Add parsing logic for numbers in name field
-            const nameInput = div.querySelector('.drivers-food-name');
-            nameInput.addEventListener('blur', function() {
-                // Example: "Omelet 2"
-                const val = nameInput.value.trim();
-                const match = val.match(/^(.+?)\s+(\d+)$/i);
-                if (match) {
-                    nameInput.value = match[1].trim();
-                    div.querySelector('.drivers-food-qty').value = match[2];
-                }
-            });
-        }
-
-        // Clear form
-        function clearForm() {
-            document.getElementById('operationsForm').reset();
-            document.getElementById('whatsappNumber').value = '';
-            document.getElementById('messagePreview').textContent = 'Fill out the form above to see the preview...';
-            document.getElementById('driversFoodGrid').innerHTML = '';
-            document.getElementById('materialsGrid').innerHTML = '';
-            showNotification('Form cleared', 'success');
-        }
-
-        // Show notification
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification ${type === 'error' ? 'error' : 'success'}`;
-            notification.classList.add('show');
+            const rawNumber = document.getElementById('whatsappNumber').value.trim();
+            const countryCode = document.getElementById('countryCodeSelect').value;
             
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            let fullPhone = '';
+            if (rawNumber) {
+                const digits = rawNumber.replace(/\D/g, '');
+                if (digits.length >= 10 && !rawNumber.startsWith('+') && countryCode !== 'custom') {
+                    // Check if country code is already included
+                    if (digits.startsWith(countryCode)) {
+                        fullPhone = digits;
+                    } else {
+                        fullPhone = countryCode + digits;
+                    }
+                } else {
+                    fullPhone = digits;
+                }
+            }
+
+            const encodedMsg = encodeURIComponent(message);
+            let finalUrl = '';
+
+            if (forceWeb) {
+                // Desktop WhatsApp Web direct link
+                finalUrl = fullPhone 
+                    ? `https://web.whatsapp.com/send?phone=${fullPhone}&text=${encodedMsg}`
+                    : `https://web.whatsapp.com/send?text=${encodedMsg}`;
+            } else {
+                // Universal cross-platform link
+                finalUrl = fullPhone
+                    ? `https://api.whatsapp.com/send?phone=${fullPhone}&text=${encodedMsg}`
+                    : `https://api.whatsapp.com/send?text=${encodedMsg}`;
+            }
+
+            window.open(finalUrl, '_blank', 'noopener,noreferrer');
+            showToast('Opening WhatsApp...', 'success');
+        };
+
+        // Copy Formatted Text to Clipboard
+        window.copyReportText = function() {
+            const message = generatePreview();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(message)
+                    .then(() => showToast('Report copied to clipboard!'))
+                    .catch(() => fallbackCopy(message));
+            } else {
+                fallbackCopy(message);
+            }
+        };
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('Report copied to clipboard!');
+            } catch (err) {
+                showToast('Failed to copy. Please manually copy the preview.', 'error');
+            }
+            document.body.removeChild(textarea);
         }
 
-        // Auto-generate preview when form changes
-        document.getElementById('operationsForm').addEventListener('input', generatePreview);
-        document.getElementById('operationsForm').addEventListener('change', generatePreview);
+        // Native Web Share API
+        window.shareNativeReport = function() {
+            const message = generatePreview();
+            const dateObj = getSelectedDateObject();
+            const title = `${propertyName} Daily Report - ${dateObj.toLocaleDateString()}`;
 
-        // Update date display and preview when date changes
-        document.getElementById('reportDate').addEventListener('change', function() {
-            updateDate();
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: message
+                }).then(() => {
+                    showToast('Report shared successfully!');
+                }).catch((err) => {
+                    if (err.name !== 'AbortError') {
+                        copyReportText();
+                    }
+                });
+            } else {
+                // Fallback to clipboard
+                copyReportText();
+            }
+        };
+
+        // Export as .TXT
+        window.downloadReportTxt = function() {
+            const message = generatePreview();
+            const datePickerVal = document.getElementById('reportDatePicker').value || 'daily-report';
+            const filename = `${propertyName.toLowerCase().replace(/\s+/g, '_')}_report_${datePickerVal}.txt`;
+            
+            const blob = new Blob([message], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast(`Exported ${filename}`);
+        };
+
+        // Save & Manage Contacts
+        function initRecipients() {
+            const select = document.getElementById('savedRecipientsSelect');
+            const saved = JSON.parse(localStorage.getItem(RECIPIENTS_KEY) || '[]');
+            
+            // Rebuild options
+            select.innerHTML = '<option value="">Choose / None</option>';
+            saved.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.phone;
+                opt.textContent = `${item.label} (${item.phone})`;
+                select.appendChild(opt);
+            });
+            
+            const addOpt = document.createElement('option');
+            addOpt.value = 'save_current';
+            addOpt.textContent = '➕ Save Current Number';
+            select.appendChild(addOpt);
+        }
+
+        function saveCurrentNumberAsRecipient() {
+            const currentNum = document.getElementById('whatsappNumber').value.trim();
+            if (!currentNum) {
+                showToast('Enter a phone number first to save it.', 'error');
+                document.getElementById('savedRecipientsSelect').value = '';
+                return;
+            }
+            const label = prompt('Enter a label for this contact (e.g. Operations Manager, Security Lead):', 'Manager');
+            if (label && label.trim()) {
+                const saved = JSON.parse(localStorage.getItem(RECIPIENTS_KEY) || '[]');
+                saved.push({ label: label.trim(), phone: currentNum });
+                localStorage.setItem(RECIPIENTS_KEY, JSON.stringify(saved));
+                initRecipients();
+                document.getElementById('savedRecipientsSelect').value = currentNum;
+                showToast(`Saved contact "${label}"!`);
+            } else {
+                document.getElementById('savedRecipientsSelect').value = '';
+            }
+        }
+
+        // LocalStorage Draft Persistence
+        function saveDraft() {
+            const foodItems = [];
+            document.querySelectorAll('#driversFoodGrid .dynamic-item-row').forEach(row => {
+                foodItems.push({
+                    name: row.querySelector('.drivers-food-name')?.value || '',
+                    qty: row.querySelector('.drivers-food-qty')?.value || ''
+                });
+            });
+
+            const materials = [];
+            document.querySelectorAll('#materialsGrid .dynamic-item-row').forEach(row => {
+                materials.push({
+                    name: row.querySelector('.material-name')?.value || '',
+                    qty: row.querySelector('.material-qty')?.value || '',
+                    unit: row.querySelector('.material-unit')?.value || 'nos'
+                });
+            });
+
+            const draft = {
+                date: document.getElementById('reportDatePicker').value,
+                totalDrivers: document.getElementById('totalDrivers').value,
+                dayout: document.getElementById('dayout').value,
+                stay: document.getElementById('stay').value,
+                eveningOut: document.getElementById('eveningOut').value,
+
+                welcomeDrink: document.getElementById('welcomeDrink').checked,
+                food: document.getElementById('food').checked,
+                teaSnacks: document.getElementById('teaSnacks').checked,
+                farmVisit: document.getElementById('farmVisit').checked,
+
+                totalVehicles: document.getElementById('totalVehicles').value,
+                vehicleDayOut: document.getElementById('vehicleDayOut').value,
+                vehicleStay: document.getElementById('vehicleStay').value,
+                vehicleEveningOut: document.getElementById('vehicleEveningOut').value,
+
+                walkInEnquiries: document.getElementById('walkInEnquiries').value,
+                gatePasses: document.getElementById('gatePasses').value,
+                resumesReceived: document.getElementById('resumesReceived').value,
+                interviews: document.getElementById('interviews').value,
+
+                wristbandIssued: document.getElementById('wristbandIssued').value,
+                whatsappNumber: document.getElementById('whatsappNumber').value,
+                countryCode: document.getElementById('countryCodeSelect').value,
+
+                foodItems: foodItems,
+                materials: materials
+            };
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+            
+            const pill = document.getElementById('autoSaveIndicator');
+            pill.textContent = 'Auto-Saved';
+            pill.style.opacity = '1';
+        }
+
+        function restoreDraftOrSample() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) {
+                // If clean slate, load sample data so user immediately sees how it functions
+                loadSampleData(false);
+                return;
+            }
+
+            try {
+                const data = JSON.parse(saved);
+                if (data.date) document.getElementById('reportDatePicker').value = data.date;
+                updateDateDisplay();
+
+                document.getElementById('totalDrivers').value = data.totalDrivers || 0;
+                document.getElementById('dayout').value = data.dayout || 0;
+                document.getElementById('stay').value = data.stay || 0;
+                document.getElementById('eveningOut').value = data.eveningOut || 0;
+
+                const setCheck = (id, val) => {
+                    const cb = document.getElementById(id);
+                    if (cb) {
+                        cb.checked = !!val;
+                        document.getElementById(`chip-${id}`)?.classList.toggle('active', !!val);
+                    }
+                };
+
+                setCheck('welcomeDrink', data.welcomeDrink);
+                setCheck('food', data.food);
+                setCheck('teaSnacks', data.teaSnacks);
+                setCheck('farmVisit', data.farmVisit);
+
+                document.getElementById('totalVehicles').value = data.totalVehicles || 0;
+                document.getElementById('vehicleDayOut').value = data.vehicleDayOut || 0;
+                document.getElementById('vehicleStay').value = data.vehicleStay || 0;
+                document.getElementById('vehicleEveningOut').value = data.vehicleEveningOut || 0;
+
+                document.getElementById('walkInEnquiries').value = data.walkInEnquiries || 0;
+                document.getElementById('gatePasses').value = data.gatePasses || 0;
+                document.getElementById('resumesReceived').value = data.resumesReceived || 0;
+                document.getElementById('interviews').value = data.interviews || 0;
+
+                document.getElementById('wristbandIssued').value = data.wristbandIssued || 0;
+                if (data.whatsappNumber) document.getElementById('whatsappNumber').value = data.whatsappNumber;
+                if (data.countryCode) document.getElementById('countryCodeSelect').value = data.countryCode;
+
+                // Restore Food
+                document.getElementById('driversFoodGrid').innerHTML = '';
+                if (Array.isArray(data.foodItems)) {
+                    data.foodItems.forEach(item => addDriversFoodItem(item.name, item.qty));
+                }
+
+                // Restore Materials
+                document.getElementById('materialsGrid').innerHTML = '';
+                if (Array.isArray(data.materials)) {
+                    data.materials.forEach(item => addMaterialItem(item.name, item.qty, item.unit));
+                }
+
+                generatePreview();
+            } catch (err) {
+                console.error('Error restoring draft:', err);
+            }
+        }
+
+        // Load Sample Demo Data
+        window.loadSampleData = function(notify = true) {
+            document.getElementById('totalDrivers').value = 1;
+            document.getElementById('dayout').value = 1;
+            document.getElementById('stay').value = 0;
+            document.getElementById('eveningOut').value = 0;
+
+            const setCheck = (id, val) => {
+                const cb = document.getElementById(id);
+                if (cb) {
+                    cb.checked = val;
+                    document.getElementById(`chip-${id}`)?.classList.toggle('active', val);
+                }
+            };
+
+            setCheck('welcomeDrink', true);
+            setCheck('food', true);
+            setCheck('teaSnacks', true);
+            setCheck('farmVisit', true);
+
+            document.getElementById('totalVehicles').value = 14;
+            document.getElementById('vehicleDayOut').value = 11;
+            document.getElementById('vehicleStay').value = 3;
+            document.getElementById('vehicleEveningOut').value = 0;
+
+            document.getElementById('walkInEnquiries').value = 1;
+            document.getElementById('gatePasses').value = 2;
+            document.getElementById('resumesReceived').value = 0;
+            document.getElementById('interviews').value = 0;
+
+            // Clear & populate driver's food
+            document.getElementById('driversFoodGrid').innerHTML = '';
+            addDriversFoodItem('Omelet', 1);
+            addDriversFoodItem('Rice', 2);
+
+            // Clear & populate materials
+            document.getElementById('materialsGrid').innerHTML = '';
+            addMaterialItem('Ayurvedic oil', 12, 'ltr');
+            addMaterialItem('Clay pot', 6, 'nos');
+            addMaterialItem('Log registration book', 1, 'nos');
+            addMaterialItem('Cookies', 36.5, 'kg');
+            addMaterialItem('Cerelac', 5, 'nos');
+            addMaterialItem('Potassium', 10, 'nos');
+
+            document.getElementById('wristbandIssued').value = 55;
+
             generatePreview();
-        });
+            saveDraft();
+            if (notify) {
+                showToast('Sample operations data loaded!');
+            }
+        };
 
-        // Initialize
-        updateDate();
+        // Clear / Reset Form
+        window.confirmClearForm = function() {
+            if (confirm('Are you sure you want to clear all form fields?')) {
+                document.getElementById('operationsForm').reset();
+                document.getElementById('totalDrivers').value = 0;
+                document.getElementById('dayout').value = 0;
+                document.getElementById('stay').value = 0;
+                document.getElementById('eveningOut').value = 0;
+                document.getElementById('totalVehicles').value = 0;
+                document.getElementById('vehicleDayOut').value = 0;
+                document.getElementById('vehicleStay').value = 0;
+                document.getElementById('vehicleEveningOut').value = 0;
+                document.getElementById('walkInEnquiries').value = 0;
+                document.getElementById('gatePasses').value = 0;
+                document.getElementById('resumesReceived').value = 0;
+                document.getElementById('interviews').value = 0;
+                document.getElementById('wristbandIssued').value = 0;
+
+                ['welcomeDrink', 'food', 'teaSnacks', 'farmVisit'].forEach(id => {
+                    const cb = document.getElementById(id);
+                    if (cb) cb.checked = false;
+                    document.getElementById(`chip-${id}`)?.classList.remove('active');
+                });
+
+                document.getElementById('driversFoodGrid').innerHTML = '';
+                document.getElementById('materialsGrid').innerHTML = '';
+
+                localStorage.removeItem(STORAGE_KEY);
+                generatePreview();
+                showToast('Form cleared successfully.');
+            }
+        };
+
+        // Toast Feedback System
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = message;
+            toastIcon.textContent = type === 'error' ? '⚠️' : '✅';
+            toast.className = `toast show ${type === 'error' ? 'error' : ''}`;
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3200);
+        }
+
+        // HTML Sanitizer helper for preview insertion
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
     </script>
 </body>
 </html>
